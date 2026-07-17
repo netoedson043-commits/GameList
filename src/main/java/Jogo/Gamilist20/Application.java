@@ -5,6 +5,7 @@ import Jogo.Gamilist20.Servicos.Entrada;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,6 +13,11 @@ import java.util.Scanner;
 
 @SpringBootApplication
 public class Application {
+	private static String apiKeyEstatico;
+	@Value("${rawg.api.key}")
+	public void setApiKey(String apiKey) {
+		Application.apiKeyEstatico = apiKey;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args); {
@@ -21,7 +27,7 @@ public class Application {
 			System.out.println("nome do jogo");
 			String buscarJogo = scanner.nextLine();
 
-			String endereco = "https://api.rawg.io/api/games?key=15a3e542eb6749c49df86111d2e2acd0&search=" + buscarJogo;
+			String endereco = "https://api.rawg.io/api/games?key=" + apiKeyEstatico + "&search=" + buscarJogo;
 
 
 			var resultado = jogoProcurado.obterDados(endereco);
@@ -36,8 +42,6 @@ public class Application {
 			}
 			System.out.println(jogoEncontrado);
 
-
-			System.out.println("primeiro commit");
 
 		}
 
