@@ -26,15 +26,15 @@ public class Application {
 
 			var resultado = jogoProcurado.obterDados(endereco);
 			ObjectMapper jackson = new ObjectMapper();
-			JogoRawg jackson2 = null;
+			JogoRawg jogoEncontrado = null;
 			try {
 				JsonNode raiz = jackson.readTree(resultado);
 				JsonNode primeiroResultado = raiz.get("results").get(0);
-				jackson2 = jackson.treeToValue(primeiroResultado, JogoRawg.class);
+				jogoEncontrado = jackson.treeToValue(primeiroResultado, JogoRawg.class);
 			} catch (JsonProcessingException e) {
 				throw new RuntimeException(e);
 			}
-			System.out.println(jackson2);
+			System.out.println(jogoEncontrado);
 
 
 			System.out.println("primeiro commit");
