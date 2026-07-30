@@ -5,18 +5,24 @@ import Jogo.Gamilist20.Servicos.Entrada;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
-
+@Component
 public class BuscarJogos {
-    public void procurarJogo() {
+
+    @Value("${rawg.api.key}")
+    private String apiKey;
+
+    public JogoRawg procurarJogo() {
         Scanner scanner = new Scanner(System.in);
         Entrada jogoProcurado = new Entrada();
 
         System.out.println("nome do jogo");
         String buscarJogo = scanner.nextLine();
 
-        String endereco = "https://api.rawg.io/api/games?key=15a3e542eb6749c49df86111d2e2acd0&search=" + buscarJogo;
+        String endereco = "https://api.rawg.io/api/games?key=" + apiKey +"&search=" + buscarJogo;
 
 
         var resultado = jogoProcurado.obterDados(endereco);
@@ -30,5 +36,7 @@ public class BuscarJogos {
             throw new RuntimeException(e);
         }
         System.out.println(jackson2);
+
+        return jackson2;
     }
 }
